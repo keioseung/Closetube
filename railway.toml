@@ -1,0 +1,22 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "cd backend && python main.py"
+healthcheckPath = "/health"
+healthcheckTimeout = 100
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+
+[[services]]
+name = "backend"
+sourceDir = "backend"
+startCommand = "python main.py"
+healthcheckPath = "/health"
+
+[[services]]
+name = "frontend"
+sourceDir = "frontend"
+startCommand = "npm run start"
+healthcheckPath = "/"
+buildCommand = "npm install && npm run build" 
